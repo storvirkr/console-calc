@@ -16,6 +16,13 @@ func (c Calculator) calculate(input string) interface{} {
 		panic("Invalid input format")
 	}
 
+	isRomanNumeral := isRoman(elements[0]) && isRoman(elements[2])
+	isArabicNumeral := !isRoman(elements[0]) && !isRoman(elements[2])
+
+	if !(isRomanNumeral || isArabicNumeral) {
+		panic("Mixing Roman and Arabic numerals is not allowed")
+	}
+
 	a := parseNumber(elements[0])
 	op := elements[1]
 	b := parseNumber(elements[2])
@@ -37,7 +44,7 @@ func (c Calculator) calculate(input string) interface{} {
 		panic("Invalid operation")
 	}
 
-	if isRoman(elements[0]) && isRoman(elements[2]) {
+	if isRomanNumeral {
 		return arabicToRoman(result)
 	}
 	return result
